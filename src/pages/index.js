@@ -1,6 +1,8 @@
 import React from "react"
+import { graphql } from "gatsby"
+import Img from "gatsby-image"
 
-export default () => (
+export default ({ data }) => (
   <div>
     <header className="header">
       <div className="container">
@@ -21,7 +23,7 @@ export default () => (
     
     <section className="hero">
       <figure>
-        <img src="/images/hero.jpg" alt="" />
+        <Img fluid={data.file.childImageSharp.fluid} alt="" />
       </figure>
       <div className="catch">
         <h1>There is no love sincerer than<br /> the love of food.</h1>
@@ -107,3 +109,21 @@ export default () => (
     </footer>
   </div>
 ) 
+
+export const query = graphql`
+query {
+  file(relativePath: { eq: "hero.jpg" }) {
+    childImageSharp {
+      fluid(maxWidth: 1600) {
+        base64
+        aspectRatio
+        src
+        srcSet
+        srcWebp
+        srcSetWebp
+        sizes
+      }
+    }
+  }
+}
+`
